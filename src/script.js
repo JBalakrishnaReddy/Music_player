@@ -29,11 +29,7 @@ musicPlay.addEventListener('click', ()=>{
 
 audioElem.addEventListener('timeupdate', ()=>{
     let progress = parseInt((audioElem.currentTime/audioElem.duration)*100);
-    // console.log(progress)
-    // myProgressBar.min = 0;
-    // myProgressBar.max = audioElem.duration;
     myProgressBar.value = audioElem.currentTime;
-
 })
 
 myProgressBar.addEventListener('change', ()=>
