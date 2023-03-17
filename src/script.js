@@ -35,6 +35,7 @@ audioElem.addEventListener('timeupdate', ()=>{
 myProgressBar.addEventListener('change', ()=>
 {
     audioElem.currentTime = myProgressBar.value;
+    
 })
 
 
