@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale = 1">
+    <title> YourDJ - Your favourite music down below</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li class="brand"><img src="../images/logo.jpeg" alt="spotify"> YourDJ</li>
+            <li>Home</li>
+            <li>About</li>
+
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <!-- This container contains song lists and 
+            the background of the same -->
+            <div class="songsList">
+                <h1> Best of NCS - No copyright Songs</h1>
+                <div class="songItemContainer">
+                    <div class="songItem">
+                        <img src="../images/covers/1.jpg">
+                        <span>Song name</span>
+                        <span class="songListPlay"><span class="timestamp">05:20 <i class="far fa fa-play-circle"></i></span></span>
+                    </div>
+
+                    
+                </div>
+            </div>
+            <div class="songBanner"></div>
+    </div>
+
+    <div class="bottom">
+        <input type="range" name="range" id="myProgressBar" min="0" value=0 max="100">
+        <span class="startDuration">00:00:00 <span class="stopDuration">00:00:00</span></span>
+        <div class="icons">
+            <i class="fas fa-3x fa-step-backward" id="music_backward"></i>
+            <i class="far fa-3x fa-play-circle" id="musicPlay"></i>
+            <i class="fas fa-3x fa-step-forward" id="music_forward"></i>
+            <!-- awesome fonts in here -->
+        </div>
+        <div class="songInfo">
+            
+            <img src="../images/covers/playing.gif" width="100px" id="playAnimation"> Some random song name 
+            
+        </div>
+
+    </div>
+
+    <script src="https://kit.fontawesome.com/26504e4a1f.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

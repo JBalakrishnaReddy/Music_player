@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Sono:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,300&display=swap');
+
+body{
+    background-color: antiquewhite;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+nav{
+    font-family: 'Sono', sans-serif;
+}
+
+nav ul{
+    display: flex;
+    list-style-type: none;
+    height: 50px;
+    background-color: black;
+    color: white;
+    align-items: center;
+}
+
+nav ul li{
+    padding: 0 12px;
+}
+
+.brand{
+    display: flex;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 1.3rem;
+}
+
+.brand img{
+    width: 40px;
+    padding: 0 5px;
+}
+
+
+.container{
+    height: 75vh;
+    background-color: black;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+    display: flex;
+    margin: 10px auto;
+    width: 70%;
+    border-radius: 12px;
+    padding: 10px;
+    background-image: url('../images/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+
+.bottom{
+    position: sticky;
+    display: flex;
+    height: 120px;
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+}
+
+.icons{
+    margin: 10px 0px;
+}
+
+.icons i{
+    cursor: pointer;
+}
+
+#myProgressBar{
+    display: flex;
+    /* text-align: center; */
+    /* align-items: center; */
+    width: 80vw;
+    cursor: pointer;
+    /* height: 50px;
+    text-decoration-thickness: 2px; */
+}
+
+.songInfo{
+    font-family: 'Ubuntu', sans-serif;
+    position: absolute;
+    left: 10vw;
+}
+
+.startDuration{
+    display: flex;
+    font-family: 'Ubuntu', sans-serif;
+    position: absolute;
+    left: 10vw;
+    /* align-items: left; */
+    /* justify-content: space-between; */
+}
+
+.stopDuration{
+    display: flex;
+    font-family: 'Ubuntu', sans-serif;
+    position: relative;
+    left: 70vw;
+    /* position: absolute;
+    left: 74vw; */
+
+    /* align-items: right; */
+}
+
+.songInfo img{
+    opacity: 0;
+    transition:  opacity 0.2s ease-in;
+}
+
+.songItem{
+    display: flex;
+    height: 50px;
+    /* width: 50px; */
+    margin: 12px 0;
+    background-color: white;
+    justify-content: space-between;
+    color: black;
+    border-radius: 35px;
+    padding: 5px;
+    align-items: center;
+    
+}
+
+.songItem img{
+    width: 50px;
+    shape-margin: 0%;
+    border-radius: 30px;
+}
+
+.timestamp{
+    margin: 0 10px;
+}
+
+.timestamp i{
+    cursor: pointer;
+}
