@@ -1,3 +1,7 @@
+<!-- Let's not dwell into this complex file system related stuff. 
+    First lets concentrate on beautifying the existing application that 
+    obtains songs from the existing default directory that is hard coded. -->
+<!-- Features to add to this  -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,13 +28,24 @@
             the background of the same -->
             <div class="songsList">
                 <h1> Best of NCS - No copyright Songs</h1>
-                <div class="songItemContainer">
-                    <div class="songItem">
+                <div class="songItemContainer" id="songContainer">
+                    <!-- Let's not dwell into this complex file system related stuff. 
+                        First lets concentrate on beautifying the existing application that 
+                        obtains songs from the existing default directory that is hard coded -->
+                    <!-- <div class="songItem">
+                        <input type="file" id="song-input" accept=".mp3, .wav">
+                        <img id="cover">
+                        <p id="title"></p>
+                        <p id="artist"></p>
+                        <p id="album"></p>
+                        <p id="genre"></p>
+                    </div> -->
+                        
+                    <!-- <div class="songItem" id="song1">
                         <img src="../images/covers/1.jpg">
                         <span>Song name</span>
-                        <span class="songListPlay"><span class="timestamp">05:20 <i class="far fa fa-play-circle"></i></span></span>
-                    </div>
-
+                        <span class="song1"><span class="timestamp">05:20 <i class="far fa fa-play-circle"></i></span></span>
+                    </div> -->
                     
                 </div>
             </div>
@@ -39,22 +54,32 @@
 
     <div class="bottom">
         <input type="range" name="range" id="myProgressBar" min="0" value=0 max="100">
-        <span class="startDuration">00:00:00 <span class="stopDuration">00:00:00</span></span>
+        <div class="playerPart">
+            <!-- It is located below the progress bar and has start and stop duration, song name that is being played etc -->
+            <span class="currentTime">start</span>
+            <span class="songTitle">No song</span>
+            <span class="Duration">stop</span>
+            <audio id="audioPlayer">
+                <source src = "" type="audio/mpeg">
+                <source src = "" type="audio/ogg">
+                Your browser does not support the audio tag.
+            </audio>
+        </div>
+        
         <div class="icons">
-            <i class="fas fa-3x fa-step-backward" id="music_backward"></i>
+            <i class="fas fa-3x fa-step-backward" id="musicBackward"></i>
             <i class="far fa-3x fa-play-circle" id="musicPlay"></i>
-            <i class="fas fa-3x fa-step-forward" id="music_forward"></i>
+            <i class="fas fa-3x fa-step-forward" id="musicForward"></i>
             <!-- awesome fonts in here -->
         </div>
         <div class="songInfo">
-            
-            <img src="../images/covers/playing.gif" width="100px" id="playAnimation"> Some random song name 
-            
+            <img src="../images/covers/playing.gif" width="100px" id="playAnimation">
         </div>
 
     </div>
 
     <script src="https://kit.fontawesome.com/26504e4a1f.js" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+    <script src="script.js"></script> -->
 </body>
 </html>

@@ -67,6 +67,18 @@ nav ul li{
     flex-direction: column;
 }
 
+.playerPart{
+    position: sticky;
+    display: flex;
+    height: 20 px;
+    width: 70%;
+    background-color: black;
+    color: white;
+    flex-direction: row;
+    /* align-items: center; */
+    justify-content: center;
+}
+
 .icons{
     margin: 10px 0px;
 }
@@ -87,20 +99,26 @@ nav ul li{
     left: 10vw;
 }
 
-.startDuration{
+.currentTime{
     display: flex;
     font-family: 'Ubuntu', sans-serif;
-    position: absolute;
-    left: 10vw;
+    /* position: absolute; */
+    position: relative;
+    left: -40%;
+    /* left: 10vw; */
     /* align-items: left; */
     /* justify-content: space-between; */
 }
 
-.stopDuration{
+.Duration{
     display: flex;
     font-family: 'Ubuntu', sans-serif;
     position: relative;
-    left: 70vw;
+    left: 40%;
+    /* left: 70vw; */
+
+    /* border-right: 20 vw;
+    right */
     /* position: absolute;
     left: 74vw; */
 
