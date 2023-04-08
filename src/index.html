@@ -56,9 +56,9 @@
         <input type="range" name="range" id="myProgressBar" min="0" value=0 max="100">
         <div class="playerPart">
             <!-- It is located below the progress bar and has start and stop duration, song name that is being played etc -->
-            <span class="currentTime">start</span>
-            <span class="songTitle">No song</span>
-            <span class="Duration">stop</span>
+            <span class="currentTime" id="currentTime">00:00:00</span>
+            <span class= "songTitle" id="songTitle">No song</span>
+            <span class= "Duration" id="Duration">00:00:00</span>
             <audio id="audioPlayer">
                 <source src = "" type="audio/mpeg">
                 <source src = "" type="audio/ogg">
@@ -79,7 +79,7 @@
     </div>
 
     <script src="https://kit.fontawesome.com/26504e4a1f.js" crossorigin="anonymous"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
-    <script src="script.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

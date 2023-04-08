@@ -3,11 +3,20 @@ console.log("This is a music player")
 //Initialize variables
 let songIndex = 0;
 let songList = [] ; //This list holds the cookies from which the song list and their respective paths will be present
+//These are related to song control
 let musicPlay = document.getElementById("musicPlay");
 let musicBackward = document.getElementById("musicBackward")
 let musicForward = document.getElementById("musicForward")
+//Song progress bar
 let myProgressBar = document.getElementById("myProgressBar");
-let audioElem = new Audio('../songs/1.mp3');
+// let audioElem = new Audio('../songs/1.mp3');
+//Song details and their current time and duration details
+let currentTime = document.getElementById('currentTime') 
+let songDuration = document.getElementById('Duration')
+let audioElem = document.getElementById('audioPlayer')
+let songTitle = document.getElementById('songTitle')
+
+
 let songContainer = document.getElementById("songContainer");
 let currentSongIndex = 0
 let playAnimation = document.getElementById('playAnimation');
@@ -38,6 +47,12 @@ for(let i =0; i < songs.length; i++)
         </div>`
         // <span class="timestamp-${i}"><span class="timestamp">${duration}<i class="far fa fa-play-circle"></i></span></span>
         
+}
+// Throughout this application I will try to use different ways of function implementation for my practise only
+toTime = (seconds) => { // This is just an arrow function used for my practise and nothing else
+    var date = new Date(null);
+    date.setSeconds(seconds);
+    return date.toISOString().substring(11, 19);
 }
 
 // const jsm  = window.jsmediatags
@@ -85,11 +100,17 @@ for(let i =0; i < songs.length; i++)
 //     </div>'
 // });
 
+
+//Event handlers down here
+
 musicPlay.addEventListener('click', ()=>{
     // console.log('inside the event')
     myProgressBar.min = 0;
     myProgressBar.max = audioElem.duration;
-
+    if(audioElem.src == '')
+    {
+        audioElem.src = songs[0].filepath;
+    }
     if(audioElem.paused || audioElem.currentTime<=0){
         playAnimation.style.opacity = 1
         audioElem.play();
@@ -104,10 +125,6 @@ musicPlay.addEventListener('click', ()=>{
     }
 })
 
-// musicForward.addEventListener('click', ()=>{
-//     console.log('next button clicked')
-//     playSong(songs[++currentSongIndex]['filepath']);
-// })
 musicForward.addEventListener('click', playNextSong)
 
 function playNextSong()
@@ -118,10 +135,17 @@ function playNextSong()
 function playSong(songPath){
     // This function takes arguments from the events when clicked on play or pause or next or back 
     playAnimation.style.opacity = 0
-    audioElem.pause()
-    musicPlay.classList.remove('fa-pause-circle');
-    musicPlay.classList.add('fa-play-circle');
-    audioElem = new Audio(songPath)
+    if (!audioElem.paused)
+    {
+        audioElem.pause()
+        musicPlay.classList.remove('fa-pause-circle');
+        musicPlay.classList.add('fa-play-circle');
+    }
+    // audioElem = new Audio(songPath)
+    audioElem.src = songPath
+    // songTitle.textContent = songPath.split('/').slice(-1).split('.')[0]
+    songTitle.textContent = songPath.split('/').slice(-1)[0].split('.')[0]
+
     playAnimation.style.opacity = 1
     audioElem.play()
     musicPlay.classList.remove('fa-play-circle');
@@ -138,6 +162,7 @@ musicBackward.addEventListener('click', ()=>{
 audioElem.addEventListener('timeupdate', ()=>{
     let progress = parseInt((audioElem.currentTime/audioElem.duration)*100);
     myProgressBar.value = audioElem.currentTime;
+    currentTime.textContent = toTime(audioElem.currentTime)
 })
 
 audioElem.addEventListener('ended', playNextSong)
@@ -147,8 +172,6 @@ myProgressBar.addEventListener('change', ()=>
     audioElem.currentTime = myProgressBar.value;
 })
 
-
-//Event handlers down here
 
 
 // Maintain a list of songs that are currently in present in the container and their dynamic ids.
