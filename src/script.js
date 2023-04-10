@@ -43,7 +43,7 @@ for(let i =0; i < songs.length; i++)
     songContainer.innerHTML += `<div class="songItem", id = "song-${i}">
         <img src=${songs[i].coverpath}>
         <span>${songs[i].songName}</span>
-        <span id="timestamp-${i}"><span class="timestamp">${duration}<i class="far fa fa-play-circle"></i></span></span>
+        <span id="timestamp-${i}"><span class="timestamp">${duration}<i id="song-action-${i}" class="far fa fa-play-circle"></i></span></span>
         </div>`
         // <span class="timestamp-${i}"><span class="timestamp">${duration}<i class="far fa fa-play-circle"></i></span></span>
         
@@ -54,6 +54,7 @@ toTime = (seconds) => { // This is just an arrow function used for my practise a
     date.setSeconds(seconds);
     return date.toISOString().substring(11, 19);
 }
+
 
 // const jsm  = window.jsmediatags
 // document.querySelector("#song-input").addEventListener("change", (event) => {
@@ -103,8 +104,10 @@ toTime = (seconds) => { // This is just an arrow function used for my practise a
 
 //Event handlers down here
 
-musicPlay.addEventListener('click', ()=>{
+
+playOrPause = (event="")=>{
     // console.log('inside the event')
+    // console.log(event)
     myProgressBar.min = 0;
     myProgressBar.max = audioElem.duration;
     if(audioElem.src == '')
@@ -123,18 +126,26 @@ musicPlay.addEventListener('click', ()=>{
         musicPlay.classList.remove('fa-pause-circle');
         musicPlay.classList.add('fa-play-circle');
     }
-})
+}
+
+musicPlay.addEventListener('click', playOrPause)
 
 musicForward.addEventListener('click', playNextSong)
 
 function playNextSong()
 {
-    playSong(songs[++currentSongIndex]['filepath']);
+    ++currentSongIndex
+    if(currentSongIndex >= songs.length)
+        currentSongIndex = 0;
+    
+    playSong(songs[currentSongIndex]['filepath']);
 }
 
 function playSong(songPath){
+    // console.log(songPath)
     // This function takes arguments from the events when clicked on play or pause or next or back 
     playAnimation.style.opacity = 0
+    myProgressBar.min = 0;
     if (!audioElem.paused)
     {
         audioElem.pause()
@@ -153,10 +164,21 @@ function playSong(songPath){
 }
 
 musicBackward.addEventListener('click', ()=>{
-    console.log('back button clicked')
-    if(currentSongIndex == 0)
-        return
-    playSong(songs[--currentSongIndex]['filepath'])
+    // console.log('back button clicked')
+    --currentSongIndex;
+    if(currentSongIndex <= 0)
+        currentSongIndex = songs.length-1
+    playSong(songs[currentSongIndex]['filepath'])
+})
+
+// audioElem.onloadedmetadata = function() {
+//     // alert("Metadata for video loaded");
+//     songDuration.textContent = toTime(audioElem.duration);// audioElem.duration
+// };
+
+audioElem.addEventListener('loadedmetadata', ()=>{
+    songDuration.textContent = toTime(audioElem.duration);
+    myProgressBar.max = audioElem.duration
 })
 
 audioElem.addEventListener('timeupdate', ()=>{
@@ -173,6 +195,34 @@ myProgressBar.addEventListener('change', ()=>
 })
 
 
+function makeAllPlays()
+{
+    songElements.forEach((element)=>{
+        element.classList.remove('fa-pause-circle')
+        element.classList.add('fa-play-circle')
+    })
+}
+
+songElements = Array.from(document.getElementsByClassName('fa'))
+songElements.forEach((element)=>{
+    element.addEventListener('click', method)
+})
+
+function method(e){
+    // console.log(e)
+    // console.log(e.target)
+    makeAllPlays()
+    // console.log(e.target.classList)
+    console.log(e.target.id)
+    // e.target.id.parentElement.parentElement.parentElement
+    currentSongIndex = parseInt(e.target.id.split('-')[2])
+    // audioElem.src = songs[currentSongIndex]
+    playSong(songs[currentSongIndex]['filepath'])
+    e.target.classList.remove('fa-play-circle')
+    e.target.classList.add('fa-pause-circle')
+
+
+}
 
 // Maintain a list of songs that are currently in present in the container and their dynamic ids.
 // Modfify the inner HTML from this script file so as to accomodate more number of files.
