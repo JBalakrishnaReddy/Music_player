@@ -3,6 +3,7 @@ console.log("This is a music player")
 //Initialize variables
 let songIndex = 0;
 let songList = [] ; //This list holds the cookies from which the song list and their respective paths will be present
+
 //These are related to song control
 let musicPlay = document.getElementById("musicPlay");
 let musicBackward = document.getElementById("musicBackward")
@@ -10,6 +11,7 @@ let musicForward = document.getElementById("musicForward")
 //Song progress bar
 let myProgressBar = document.getElementById("myProgressBar");
 // let audioElem = new Audio('../songs/1.mp3');
+
 //Song details and their current time and duration details
 let currentTime = document.getElementById('currentTime') 
 let songDuration = document.getElementById('Duration')
@@ -55,82 +57,107 @@ toTime = (seconds) => { // This is just an arrow function used for my practise a
     return date.toISOString().substring(11, 19);
 }
 
+/*
+const jsm  = window.jsmediatags
+document.querySelector("#song-input").addEventListener("change", (event) => {
+    const song = event.target.files[0]
+    console.log(song)
+    jsm.read(song, {
+        onSuccess: function(tag) {
+            console.log(tag)
+            const data = tag.tags.picture.data;
+            const format = tag.tags.picture.format;
+            let baseString64 = ""
+            for(var i=0; i< data.length; i++)
+                baseString64 += String.fromCharCode(data[i])
+            let img = `url(data:${format}; base64, ${window.btoa(baseString64)})`
+            var title = tag.tags.title
+            var artist = tag.tags.artist
+            var time = tag.tags.time
+            var album = tag.tags.album
+            var genre = tag.tags.genre
+        },
+        onError: function(error) {
+            console.log(error)
+        }
+    })
+  }) */
 
-// const jsm  = window.jsmediatags
-// document.querySelector("#song-input").addEventListener("change", (event) => {
-//     const song = event.target.files[0]
-//     console.log(song)
+/*
+jsm.read(songs[1]['filepath'], {
+    onSuccess: function(tag) {
+      console.log(tag)
+    },
+    onError: function(error) {
+        console.log(error)
+    }
+  })*/ 
 
-//     jsm.read(song, {
-//         onSuccess: function(tag) {
-//             console.log(tag)
-//             const data = tag.tags.picture.data;
-//             const format = tag.tags.picture.format;
-//             let baseString64 = ""
-//             for(var i=0; i< data.length; i++)
-//                 baseString64 += String.fromCharCode(data[i])
-//             let img = `url(data:${format}; base64, ${window.btoa(baseString64)})`
-
-//             var title = tag.tags.title
-//             var artist = tag.tags.artist
-//             var time = tag.tags.time
-//             var album = tag.tags.album
-//             var genre = tag.tags.genre
-//         },
-//         onError: function(error) {
-//             console.log(error)
-//         }
-//     })
-//   })
-
-// jsm.read(songs[1]['filepath'], {
-//     onSuccess: function(tag) {
-//       console.log(tag)
-//     },
-//     onError: function(error) {
-//         console.log(error)
-//     }
-//   })
+/*
+let fillsongs = (songsContainer, path) => ({
+    songsContainer.innerHTML = '<div class="songItem">
+    <img src="../images/covers/1.jpg">
+    <span>Song name</span>
+    <span class="song1"><span class="timestamp">05:20 <i class="far fa fa-play-circle"></i></span></span>
+    </div>'
+}) */
 
 
-// let fillsongs = (songsContainer, path) => ({
-//     songsContainer.innerHTML = '<div class="songItem">
-//     <img src="../images/covers/1.jpg">
-//     <span>Song name</span>
-//     <span class="song1"><span class="timestamp">05:20 <i class="far fa fa-play-circle"></i></span></span>
-//     </div>'
-// });
-
-
-//Event handlers down here
-
+// Different ways of defining a funcion. Below is a type of arrow function and the other funcions\
+// are normal functions that are widely available in all other programming languages
+removeAndAdd = (handler, removeElem, addElem) => {
+    handler.remove(removeElem)
+    handler.add(addElem)
+}
 
 playOrPause = (event="")=>{
     // console.log('inside the event')
     // console.log(event)
-    myProgressBar.min = 0;
     myProgressBar.max = audioElem.duration;
     if(audioElem.src == '')
     {
+        myProgressBar.min = 0;
         audioElem.src = songs[0].filepath;
     }
     if(audioElem.paused || audioElem.currentTime<=0){
         playAnimation.style.opacity = 1
         audioElem.play();
-        musicPlay.classList.remove('fa-play-circle');
-        musicPlay.classList.add('fa-pause-circle');
+        removeAndAdd(musicPlay.classList, 'fa-play-circle', 'fa-pause-circle')
+        // musicPlay.classList.remove('fa-play-circle');
+        // musicPlay.classList.add('fa-pause-circle');
     }
     else{
         playAnimation.style.opacity = 0;
         audioElem.pause();
-        musicPlay.classList.remove('fa-pause-circle');
-        musicPlay.classList.add('fa-play-circle');
+        removeAndAdd(musicPlay.classList, 'fa-pause-circle', 'fa-play-circle')
+        // musicPlay.classList.remove('fa-pause-circle');
+        // musicPlay.classList.add('fa-play-circle');
     }
 }
 
-musicPlay.addEventListener('click', playOrPause)
+function playSong(songPath){
+    // console.log(songPath)
+    // This function takes arguments from the events when clicked on play or pause or next or back 
+    playAnimation.style.opacity = 0
+    myProgressBar.min = 0;
+    if (!audioElem.paused)
+    {
+        playOrPause()
+        // audioElem.pause()
+        // musicPlay.classList.remove('fa-pause-circle');
+        // musicPlay.classList.add('fa-play-circle');
+    }
+    // audioElem = new Audio(songPath)
+    audioElem.src = songPath
+    // songTitle.textContent = songPath.split('/').slice(-1).split('.')[0]
+    songTitle.textContent = songPath.split('/').slice(-1)[0].split('.')[0]
 
-musicForward.addEventListener('click', playNextSong)
+    playAnimation.style.opacity = 1
+    playOrPause()
+    // audioElem.play()
+    // musicPlay.classList.remove('fa-play-circle');
+    // musicPlay.classList.add('fa-pause-circle');
+}
 
 function playNextSong()
 {
@@ -141,27 +168,70 @@ function playNextSong()
     playSong(songs[currentSongIndex]['filepath']);
 }
 
-function playSong(songPath){
-    // console.log(songPath)
-    // This function takes arguments from the events when clicked on play or pause or next or back 
-    playAnimation.style.opacity = 0
-    myProgressBar.min = 0;
-    if (!audioElem.paused)
-    {
-        audioElem.pause()
-        musicPlay.classList.remove('fa-pause-circle');
-        musicPlay.classList.add('fa-play-circle');
-    }
-    // audioElem = new Audio(songPath)
-    audioElem.src = songPath
-    // songTitle.textContent = songPath.split('/').slice(-1).split('.')[0]
-    songTitle.textContent = songPath.split('/').slice(-1)[0].split('.')[0]
-
-    playAnimation.style.opacity = 1
-    audioElem.play()
-    musicPlay.classList.remove('fa-play-circle');
-    musicPlay.classList.add('fa-pause-circle');
+function makeAllPlays()
+{
+    songElements.forEach((element)=>{
+        element.classList.remove('fa-pause-circle')
+        element.classList.add('fa-play-circle')
+    })
 }
+
+function method(e){
+    currentSongIndex = parseInt(e.target.id.split('-')[2])
+    let _temp = new Audio(songs[currentSongIndex]['filepath'])
+    if(audioElem.src == _temp.src){
+        if(audioElem.paused){
+            playOrPause()
+            removeAndAdd(e.target.classList, 'fa-play-circle', 'fa-pause-circle')
+            return
+        }
+        playOrPause()
+        removeAndAdd(e.target.classList, 'fa-pause-circle', 'fa-play-circle')
+        return
+    }
+    playOrPause()
+    // makeAllPlays()
+    playSong(songs[currentSongIndex]['filepath'])
+    removeAndAdd(e.target.classList, 'fa-play-circle', 'fa-pause-circle')
+}
+
+songElements = Array.from(document.getElementsByClassName('fa'))
+songElements.forEach((element)=>{
+    // console.log(element)
+    element.addEventListener('click', method)
+})
+
+function changeIcon(){
+    // This function deals with changing the play pause icons at song level and at the bottom of the page.
+    
+}
+
+/* 
+Actions to be performed when few of the buttons are clicked
+1. When play or pause button at the bottom is clcked. 
+    a. the song has to play if it is not playing and pause if it is playing.
+    b. The icon has to change to pause after playing starts and similarly 
+        the button has to change to play after pausing.
+    c. Also similar icon change and action change has to happen in song bar
+2. When next button is pressed the song.
+    a. Should change the song to next and start playing it immediately.
+    b. Relevant icon play button has to change to pause,
+    c. If any song was previously playing then its pause icon has to change to play.
+    c. Changing the index of the song is internal action and will not be displayed on the main application.
+    The index  will change and all the relevant actions 
+    updating the song index and changing the song, updating its icon
+3. Samething is valid when we previous button
+4. If the song is ended
+    a. Change the song, change the song icons also.
+
+*/
+
+
+//Event handlers down here
+
+musicPlay.addEventListener('click', playOrPause)
+
+musicForward.addEventListener('click', playNextSong)
 
 musicBackward.addEventListener('click', ()=>{
     // console.log('back button clicked')
@@ -170,11 +240,6 @@ musicBackward.addEventListener('click', ()=>{
         currentSongIndex = songs.length-1
     playSong(songs[currentSongIndex]['filepath'])
 })
-
-// audioElem.onloadedmetadata = function() {
-//     // alert("Metadata for video loaded");
-//     songDuration.textContent = toTime(audioElem.duration);// audioElem.duration
-// };
 
 audioElem.addEventListener('loadedmetadata', ()=>{
     songDuration.textContent = toTime(audioElem.duration);
@@ -194,35 +259,6 @@ myProgressBar.addEventListener('change', ()=>
     audioElem.currentTime = myProgressBar.value;
 })
 
-
-function makeAllPlays()
-{
-    songElements.forEach((element)=>{
-        element.classList.remove('fa-pause-circle')
-        element.classList.add('fa-play-circle')
-    })
-}
-
-songElements = Array.from(document.getElementsByClassName('fa'))
-songElements.forEach((element)=>{
-    element.addEventListener('click', method)
-})
-
-function method(e){
-    // console.log(e)
-    // console.log(e.target)
-    makeAllPlays()
-    // console.log(e.target.classList)
-    console.log(e.target.id)
-    // e.target.id.parentElement.parentElement.parentElement
-    currentSongIndex = parseInt(e.target.id.split('-')[2])
-    // audioElem.src = songs[currentSongIndex]
-    playSong(songs[currentSongIndex]['filepath'])
-    e.target.classList.remove('fa-play-circle')
-    e.target.classList.add('fa-pause-circle')
-
-
-}
 
 // Maintain a list of songs that are currently in present in the container and their dynamic ids.
 // Modfify the inner HTML from this script file so as to accomodate more number of files.
